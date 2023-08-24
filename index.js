@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const User = require('./models/Users');
 const authRoutes = require('./routes/auth');
 const offerRoutes = require('./routes/offer');
+const profileRoutes = require('./routes/profile');
 
 // ! initializing packages
 const app = express();
@@ -48,6 +49,7 @@ mongoose
 // ! Importing Routes
 app.use(authRoutes);
 app.use(offerRoutes);
+app.use(profileRoutes);
 app.get('/', function(req, res) {
 	res.send('server is working');
 });
