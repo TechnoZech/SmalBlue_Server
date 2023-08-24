@@ -5,11 +5,9 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const bodyParser = require('body-parser')
-const passport = require('passport');
-const localStrategy = require('passport-local');
 const User = require('./models/Users');
-const path = require('path');
 const authRoutes = require('./routes/auth');
+const offerRoutes = require('./routes/offer');
 
 // ! initializing packages
 const app = express();
@@ -49,6 +47,7 @@ mongoose
 
 // ! Importing Routes
 app.use(authRoutes);
+app.use(offerRoutes);
 app.get('/', function(req, res) {
 	res.send('server is working');
 });

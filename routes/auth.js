@@ -60,11 +60,10 @@ router.post("/signup", async (req, res) => {
 		const newUserData = new Users({
 			name: req.body.userData.name,
 			email: req.body.userData.email,
-			password: send,
+			password: encryptedPassword,
 		});
-		await newUserData.save();
-
 		console.log(newUserData);
+		await newUserData.save();
 		console.log("user signedup");
 		return res.send("user saved");
 	} catch (error) {
