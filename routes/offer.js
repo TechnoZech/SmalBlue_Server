@@ -33,15 +33,15 @@ router.post('/offer', async(req, res)=>{
     }
 })
 
-//! Delete accepted offer in db
+//! Delete accepted offer and update the transaction in db
 router.patch('/offer', async(req, res)=>{
     try {
         await Offers.findByIdAndDelete(req.body.offerData._id);
         const buyerData = await Users.findById(req.body.offerData.buyerId)
         const sellerData = await Users.findById(req.body.offerData.sellerID)
-        console.log(buyerData)
-        console.log(sellerData)
-        console.log(req.body.offerData)
+        // console.log(buyerData)
+        // console.log(sellerData)
+        // console.log(req.body.offerData)
 
         const sellCurrency = req.body.offerData.sellCurrency;
         const buyCurrency = req.body.offerData.buyCurrency;
@@ -58,6 +58,31 @@ router.patch('/offer', async(req, res)=>{
 
         await buyerData.save();
         await sellerData.save();
+
+        //* Updating transaction
+        const buyerTransactions = {
+            [sellCurrency]: `+${req.body.offerData.sellAmount}`,
+        }
+        const buyerDeductedAmount = (req.body.offerData.sellAmount)*(req.body.offerData.sellRate)
+        const buyerTransactions2 = {
+            [buyCurrency]: `-${buyerDeductedAmount}`,
+        }
+        buyerData.transactions.push(buyerTransactions);
+        buyerData.transactions.push(buyerTransactions2);
+        await buyerData.save();
+
+        //seller transactions
+        const sellerTransactions = {
+            [sellCurrency]: `-${req.body.offerData.sellAmount}`,
+        }
+        const sellerAddedAmount = (req.body.offerData.sellAmount)*(req.body.offerData.sellRate)
+        const sellerTransactions2 = {
+            [buyCurrency]: `+${sellerAddedAmount}`,
+        }
+        sellerData.transactions.push(sellerTransactions);
+        sellerData.transactions.push(sellerTransactions2);
+        await sellerData.save();
+
         return res.send('offer Accepted');
     } catch (error) {
         console.log(error);

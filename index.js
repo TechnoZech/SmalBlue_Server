@@ -14,7 +14,8 @@ const app = express();
 require('dotenv').config();
 
 // ! Cors
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "https://smalblu.onrender.com", credentials: true }));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))

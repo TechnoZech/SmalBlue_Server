@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
             default: 0
         },
     },
+    transactions: Array,
     isAdmin: {
         type: Boolean,
         default: false
