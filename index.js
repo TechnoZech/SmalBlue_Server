@@ -3,7 +3,6 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
-const session = require('express-session')
 const bodyParser = require('body-parser')
 const User = require('./models/Users');
 const authRoutes = require('./routes/auth');
@@ -32,19 +31,6 @@ mongoose
 		console.log(error);
 	});
 
-// ! session setup
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET,
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		cookie: {
-// 			httpOnly: true,
-// 			maxAge: 1000 * 60 * 60 * 24 * 2
-// 			// secure: true
-// 		}
-// 	})
-// );
 
 // ! Importing Routes
 app.use(authRoutes);
@@ -53,17 +39,6 @@ app.use(profileRoutes);
 app.get('/', function(req, res) {
 	res.send('server is working');
 });
-
-
-
-
-// ! Passport setup 
-// app.use(passport.initialize());
-// app.use(passport.session());
-// passport.use(new localStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
 
 // ! server configuration
 app.set('view engine', 'ejs');
