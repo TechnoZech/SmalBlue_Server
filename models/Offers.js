@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const offerSchema = new mongoose.Schema({
-    userID: String,
-    userName: String,
+    sellerID: String,
+    sellerName: String,
     buyCurrency: String,
     sellCurrency: String,
     sellRate: Number,

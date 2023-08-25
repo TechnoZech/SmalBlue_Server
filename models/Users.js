@@ -5,9 +5,18 @@ const userSchema = new mongoose.Schema({
     email: { type: String, unique: true },
     password: String,
     balance: {
-        INR: Number,
-        EUR: Number,
-        USD: Number,
+        INR: {
+            type: Number,
+            default: 0
+        },
+        EUR: {
+            type: Number,
+            default: 0
+        },
+        USD: {
+            type: Number,
+            default: 0
+        },
     },
     isAdmin: {
         type: Boolean,
